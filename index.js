@@ -116,13 +116,13 @@ setInterval(async () => {
 
     if (results.filter((res) => res === "Strong Sell")) {
       if (Sell_) {
-        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONGE SELL"`);
+        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONG SELL"`);
         Sell_ = false;
       }
     }
     if (results.filter((res) => res === "Strong Buy")) {
       if (Buy_) {
-        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONGE BUY"`);
+        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONG BUY"`);
         Buy_ = false;
       }
     }
