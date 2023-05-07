@@ -73,7 +73,6 @@ async function getResults(lnk) {
       "section.forecast-box-graph .title",
       (el) => el.textContent
     );
-    console.log("status:",status);
     const Bank_Name = await page.$eval("h1.main-title.js-main-title", (el) =>
       el.textContent.trim()
     );
@@ -82,10 +81,13 @@ async function getResults(lnk) {
 
   results.push(lnk.split("/").pop().split("-").join(" "));
   await browser.close();
+  console.log("res:",results);
+
   return results;
 }
 
 function sendAlertToTG(alertMsg) {
+  console.log("Sending")
   const Alertbot =
     "https://api.telegram.org/bot5762212585:AAFoWYM3qdGDRfPkDyDhOMU3CiwHa4biIuo";
   const chatid = "-855310893";
@@ -110,17 +112,17 @@ let Sell_ = true;
 setInterval(async () => {
   for (const lnk of Link_Lst) {
     const results = await getResults(lnk);
-    console.log(Buy_);
+    console.log("getting result:",results);
 
-    if (results.filter((res) => res === "Strong Sell").length === 3) {
+    if (results.filter((res) => res === "Strong Sell")) {
       if (Sell_) {
-        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "SELL"`);
+        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONGE SELL"`);
         Sell_ = false;
       }
     }
-    if (results.filter((res) => res === "Strong Buy").length === 3) {
+    if (results.filter((res) => res === "Strong Buy")) {
       if (Buy_) {
-        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "BUY"`);
+        sendAlertToTG(`Alert for Bank ${results.slice(-1)} - "STRONGE BUY"`);
         Buy_ = false;
       }
     }
