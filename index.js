@@ -53,10 +53,11 @@ async function getResults(lnk) {
   const results = [];
   const timeFrames = [1, 5, 15];
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox','--disable-setuid-sandbox']
-  })  const page = await browser.newPage();
+const browser = await puppeteer.launch({
+                  headless: 'new',
+                  args: ['--no-sandbox','--disable-setuid-sandbox']
+                })
+                  const page = await browser.newPage();
 
   for (const i of timeFrames) {
     const url = `${lnk}?timeFrame=${i * 60}`;
@@ -64,7 +65,7 @@ async function getResults(lnk) {
 
     // await page.setUserAgent("Mozilla/5.0");
     // await page.goto(url, { waitUntil: "networkidle0" });
-    await page.goto(url, { waitUntil: "networkidle0", timeout: 60000 });
+    await page.goto(url, { waitUntil: "networkidle0", timeout: 100000 });
 
     await page.setDefaultNavigationTimeout(0);
     await page.waitForSelector('section')
