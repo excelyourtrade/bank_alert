@@ -1,5 +1,6 @@
 const puppeteer = require("puppeteer");
 const request = require("request");
+require('dotenv').config();
 
 Link_Lst = [
 'https://in.investing.com/equities/axis-bank-technical',
@@ -53,11 +54,14 @@ async function getResults(lnk) {
   const results = [];
   const timeFrames = [1, 5, 15];
 
+  // const browser = await puppeteer.launch({ headless: 'new' });
+  
 const browser = await puppeteer.launch({
                   headless: 'new',
-                  args: ['--no-sandbox','--disable-setuid-sandbox']
+                  args: ['--no-sandbox','--disable-setuid-sandbox', "--single-process","--no-zygote", "--disable-dev-shm-usage"],
+                  executablePath : process.env.NODE_ENV === 'production' ? process.env.PUPPETEER_EXECUTABLE_PATH : puppeteer.executablePath()
                 })
-                  const page = await browser.newPage();
+  const page = await browser.newPage();
 
   for (const i of timeFrames) {
     const url = `${lnk}?timeFrame=${i * 60}`;
@@ -65,7 +69,7 @@ const browser = await puppeteer.launch({
 
     // await page.setUserAgent("Mozilla/5.0");
     // await page.goto(url, { waitUntil: "networkidle0" });
-    await page.goto(url, { waitUntil: "networkidle0", timeout: 100000 });
+    await page.goto(url, { waitUntil: "networkidle0", timeout: 10000 });
 
     await page.setDefaultNavigationTimeout(0);
     await page.waitForSelector('section')
