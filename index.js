@@ -53,8 +53,10 @@ async function getResults(lnk) {
   const results = [];
   const timeFrames = [1, 5, 15];
 
-  const browser = await puppeteer.launch({ headless: 'new' });
-  const page = await browser.newPage();
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox','--disable-setuid-sandbox']
+  })  const page = await browser.newPage();
 
   for (const i of timeFrames) {
     const url = `${lnk}?timeFrame=${i * 60}`;
