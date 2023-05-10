@@ -171,21 +171,27 @@ let Sell_ = true;
 async function scrape() {
   while(true){
     for (const lnk of Link_Lst) {
+      
       const results = await getResults(lnk);
       console.log("getting result:",results);
       results.forEach(result => {
+        console.log(result.status)
         if (result.status === 'Strong Sell') {
-          if (Sell_) {
+          // if (Sell_) {
+            console.log("Telegram")
             sendAlertToTG(`Alert for Bank ${result.bankName} - "STRONG SELL"`);
-            Sell_ = false;
-          }
+            // Sell_ = false;
+          // }
           }
           if (result.status === 'Strong Buy') {
-            if (Sell_) {
+            // if (Sell_) {
+              // console.log("Telegram")
+
               sendAlertToTG(`Alert for Bank ${result.bankName} - "STRONG BUY"`);
-              Sell_ = false;
+              // Sell_ = false;
+            // }
             }
-            }
+            // results.clean()
       });
       // if(results.status == "Strong Sell"){
       //   console.log("HERE");
